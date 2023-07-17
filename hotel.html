@@ -104,7 +104,7 @@
     </div>
 
     <script > 
-        fetch('https://animalresort.com.co/services/precios_guarderia.php')
+        fetch('https://animalresort.com.co/services/precios_hotel.php')
            .then(response => response.json())
            .then(data => {
                // Procesar los datos obtenidos
@@ -150,19 +150,8 @@
                         precioContainer2.style.padding = '10px';
                         precioContainer2.style.marginTop = '10px';
                         precioContainer2.style.borderRadius = '10px';
-                        precioContainer2.innerHTML ="10 a 14 días<br>valor día<br><span style='color: #3c8735;'>$" + data[2] + "</span>";
-                        
-                        let precioContainer3 = document.createElement('div');
-                        precioContainer3.style.backgroundColor = 'white';
-                        precioContainer3.style.color = 'grey';
-                        precioContainer3.style.textAlign = 'center';
-                        precioContainer3.style.padding = '10px';
-                        precioContainer3.style.marginTop = '10px';
-                        precioContainer3.style.borderRadius = '10px';
-
-                        precioContainer3.innerHTML ="+15 días<br>valor día<br><span style='color: #3c8735;'>$" + data[3] + "</span>";
-                        
-
+                        precioContainer2.innerHTML ="+10 días<br>valor día<br><span style='color: #3c8735;'>$" + data[2] + "</span>";
+                    
                         // Agregar el contenedor al segundo contenedor
                         container3.appendChild(precioContainer);
                                 container3.appendChild(precioContainer2);
