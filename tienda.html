@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda</title>
@@ -33,15 +33,15 @@
 <style>
     .container {
         margin-top: 5%;
-        width: 90%;
+        width: 95%;
         color: white;
         text-align: center;
         display: flex;
     }
 
     .container img {
-        width: 30px;
-        height: 30px;
+        width: 10px;
+        height: 10px;
         margin: 0 10px;
         display: inline-block;
     }
@@ -56,19 +56,17 @@
     .card {
         width: 300px;
         margin: 20px auto;
-        text-align: center;
     }
     .card img {
-            width: 100%;
-            height: auto;
+        width: 100px;
+        height: 100px;
+        display: block;
+        margin: 0 auto; /* Centra la imagen horizontalmente */
         }
-        .card-content p.nombre_descu {
-            color: #9dcd55; 
+        .card-content p.nombre_producto {
+            color: #9dcd55;   
         }
-
-        .card-content p.precios {
-            color: #3c8735;
-        }
+       
 </style>
 
 </head>
@@ -89,7 +87,7 @@
         $(document).ready(function() {
             // Realizar la solicitud AJAX al archivo PHP para obtener los datos en formato JSON
             $.ajax({
-                url: 'precios_corte.php',
+                url: 'precios_tienda.php',
                 dataType: 'json',
                 success: function(data) {
                     // La variable 'data' contendrá los datos devueltos por el archivo PHP
@@ -100,13 +98,17 @@
                         var cardContent = $('<div class="card-content">');
                         
                         // Decodificar y mostrar la imagen
-                        var imageElement = $('<img>').attr('src', 'data:image/jpeg;base64,' + item.idprecios);
+                        var imageElement = $('<img>').attr('src', 'data:image/jpeg;base64,' + item.id);
                         
-                        var nombre_descu = $('<p >' + item.nombre_descu + '</p>');
-                        var precios = $('<p>Precio: <br>' + item.precios + '</p>');
-    
+                        var nombre_producto = $('<p >' + item.nombre_producto + '</p>');
+                        var precios = $('<p>Precio:' + item.precio_venta + '</p>');
+
+                        var categoria = $('<p > Categoria: ' + item.categoria_productos + '</p>');
+                        var cantidad_disponible = $('<p>Cantidad disponible: ' + item.stock + '</p>');
+                        var descripcion = $('<p >Descripcion: ' + item.descripcion_producto + '</p>');
+      
                         // Agregamos los elementos a la tarjeta
-                        cardContent.append(imageElement, nombre_descu, precios);
+                        cardContent.append(imageElement, nombre_producto, precios, categoria, cantidad_disponible, descripcion);
                         card.append(cardContent);
                         cardsContainer.append(card);
                     });
