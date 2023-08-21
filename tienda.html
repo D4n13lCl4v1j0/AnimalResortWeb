@@ -76,13 +76,20 @@
         <img src="logoAnimalR.png">
     </div>
 
-    <h2 class="h2">TIENDA</h2>
+    <h2 class="h2">TIENDA DE MASCOTAS </h2>
+      <form class="d-flex" role="search">
+        <form class="d-flex" role="search">
+            <input id="searchInput" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+            <button id="searchButton" class="btn btn-outline-success" type="button" onclick="filtro()" >Buscar</button>
+        </form>
+      </form>
 
     <div class="cards-container">
         <!-- Aquí se agregarán las tarjetas dinámicamente -->
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         $(document).ready(function() {
             // Realizar la solicitud AJAX al archivo PHP para obtener los datos en formato JSON
@@ -119,6 +126,49 @@
             });
         });
     </script>
+
+<script>
+    function filtro(){
+
+        var searchTerm = document.getElementById('searchInput').value;
+        var cardsContainer = $('.cards-container');
+        cardsContainer.empty();
+        
+        $.ajax({
+                url: 'precios_tienda_filtro.php',
+                type: 'GET',
+                data: { search: searchTerm },
+                dataType: 'json',
+                success: function(data) {
+                    // La variable 'data' contendrá los datos devueltos por el archivo PHP
+                    // Ahora creamos y agregamos las tarjetas a la página
+                    var cardsContainer = $('.cards-container');
+                    data.forEach(function(item) {
+                        var card = $('<div class="card">');
+                        var cardContent = $('<div class="card-content">');
+                        
+                        // Decodificar y mostrar la imagen
+                        var imageElement = $('<img>').attr('src', 'data:image/jpeg;base64,' + item.id);
+                        
+                        var nombre_producto = $('<p >' + item.nombre_producto + '</p>');
+                        var precios = $('<p>Precio:' + item.precio_venta + '</p>');
+
+                        var categoria = $('<p > Categoria: ' + item.categoria_productos + '</p>');
+                        var cantidad_disponible = $('<p>Cantidad disponible: ' + item.stock + '</p>');
+                        var descripcion = $('<p >Descripcion: ' + item.descripcion_producto + '</p>');
+      
+                        // Agregamos los elementos a la tarjeta
+                        cardContent.append(imageElement, nombre_producto, precios, categoria, cantidad_disponible, descripcion);
+                        card.append(cardContent);
+                        cardsContainer.append(card);
+                    });
+                },
+                error: function() {
+                    console.log('Error al obtener los datos.');
+                }
+            });
+    }
+</script>
 
 </body>
 </html>
