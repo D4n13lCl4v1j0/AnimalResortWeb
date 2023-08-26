@@ -106,7 +106,7 @@
                         var cardContent = $('<div class="card-content">');
                         
                         // Decodificar y mostrar la imagen
-                        var imageElement = $('<img>').attr('src', 'data:image/jpeg;base64,' + item.idprecios);
+                        var imageElement = $('<img loading="lazy">').attr('src', 'data:image/jpeg;base64,' + item.idprecios);
                         
                         var nombre_descu = $('<p >' + item.nombre_descu + '</p>');
                         var precios = $('<p>Precio: <br>' + item.precios + '</p>');
