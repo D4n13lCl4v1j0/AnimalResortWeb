@@ -25,14 +25,20 @@
 
                 <h2 class="fw-bold text-center py-5">Bienvenido</h2>
 
-                <form action="#">
+                <form action="" method="post">
+
+                    <?php
+                    include("conexion.php");
+                    include("controlador.php");
+                    ?>
+
                     <div class="mb-4">
                         <label for="email" class="form-label">Correo electronico</label>
                         <input type="email" class="form-control" name="email">
                     </div>
 
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-success">Iniciar sesion</button>
+                        <input name="btn" class="btn btn-success" type="submit" value="Iniciar sesion">
                     </div>
 
                 </form>
