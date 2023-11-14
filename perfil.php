@@ -40,10 +40,10 @@ $conexion->close();
         }
 
         .info-div {
-            background-color: white; 
-            border-radius: 10px; 
-            padding: 20px; 
-            text-align: center; 
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
         }
 
         .info-div ul {
@@ -53,6 +53,21 @@ $conexion->close();
 
         .info-div li {
             margin-bottom: 10px;
+        }
+    </style>
+    <style>
+        .btn-logout {
+            background-color: #3c8735;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-logout:hover {
+            background-color: #3c8735;
+            color: #ffffff;
         }
     </style>
 </head>
@@ -70,6 +85,10 @@ $conexion->close();
                         <li> <?php echo $email; ?></li>
                         <li><strong>Teléfono:</strong> <?php echo $telefono; ?></li>
                         <li><strong>Documento:</strong> <?php echo $documento; ?></li>
+                        <li class="nav-item">
+                            <a class="nav-link btn-logout" href="index.php">CERRAR SESION</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
