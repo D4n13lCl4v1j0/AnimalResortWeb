@@ -80,6 +80,22 @@
             margin: 5px; /* Espacio entre los elementos */
         }
 
+.btn-link{
+    background-color: #ffffff;
+      display: inline-block;
+      width: 100%;
+      padding: 15px 10px;
+      text-align: center;
+      color: #3c8735;
+      font-size: 40px;
+      border-radius: 10px;
+      text-decoration: none;
+      line-height: 30px; 
+      }
+.btn-link:hover{
+      background-color: #adf366;
+      color:#3c8735;
+     }
 </style>
 
 </head>
@@ -103,6 +119,9 @@
       
     </div>
 
+    <div>
+      <a class="btn-link" href="reserva_guarderia.html">Reservar</a>
+    </div>
     <script > 
         fetch('https://animalresort.com.co/services/precios_guarderia.php')
            .then(response => response.json())
@@ -167,8 +186,6 @@
                         container3.appendChild(precioContainer);
                                 container3.appendChild(precioContainer2);
                                         container3.appendChild(precioContainer3);
-                
-
                }
            })
            .catch(error => {
