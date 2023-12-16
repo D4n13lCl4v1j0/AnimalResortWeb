@@ -1,6 +1,11 @@
 <?php
 require 'conexion.php';
 
+if(!isset($_COOKIE['usuario_id'])) {
+    echo "<script>alert('Sesión expirada, inicie nuevamente'); window.location.href='index.php';</script>";
+    exit();
+}
+
 $idUsuario = $_COOKIE['usuario_id'];
 
 $consulta = "SELECT nombre, email, celular, documento FROM Usuarios WHERE id = $idUsuario";
