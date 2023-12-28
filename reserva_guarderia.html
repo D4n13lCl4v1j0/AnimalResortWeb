@@ -60,6 +60,7 @@
         background-color: #f2f2f2;
       }
       .info-direccion {
+        margin-bottom: 10px;
         width: 100%;
         background-color: white;
         border-radius: 10px;
@@ -74,6 +75,15 @@
         padding: 20px;
         text-align: center;
       }
+
+  .info-mascotas {
+    display: flex;
+    flex-direction: column; /* Cambia la dirección a columna para disposición vertical */
+  }
+
+  .checkbox-container {
+    margin-bottom: 10px; /* Agrega un espacio entre cada checkbox y label */
+  }
     </style>
   </head>
 
@@ -97,7 +107,9 @@
 
     <div class="info-direccion" id="direccionInfo"></div>
 
-    <div class="info-mascotas" id="mascotas"></div>
+    <div class="info-mascotas" id="mascotas">
+      <a>Selecciona tus mascotas</a>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -136,31 +148,38 @@
         });
 
         $.ajax({
-          url: "reserva_mascota.php",
-          dataType: "json",
-          success: function (data) {
-            var mascotasContainer = $(".info-mascotas");
-            data.forEach(function (item) {
-              // Assuming each item has a property called 'nombre_mascota'
-              var nombre_mascota = item.nombre_mascota;
+  url: "reserva_mascota.php",
+  dataType: "json",
+  success: function (data) {
+    var mascotasContainer = $(".info-mascotas");
 
-              // Create an element for each pet as a checkbox
-              var checkbox = $('<input type="checkbox">').attr({
-                value: nombre_mascota,
-                id: 'checkbox_' + nombre_mascota,
-              });
+    data.forEach(function (item) {
+      // Assuming each item has a property called 'nombre_mascota'
+      var nombre_mascota = item.nombre_mascota;
 
-              var label = $('<label>').attr('for', 'checkbox_' + nombre_mascota).text(nombre_mascota);
+      // Create an element for each pet as a checkbox
+      var checkbox = $('<input type="checkbox">').attr({
+        value: nombre_mascota,
+        id: 'checkbox_' + nombre_mascota,
+      });
 
-              // Append the checkbox and label to the container
-              mascotasContainer.append(checkbox);
-              mascotasContainer.append(label);
-            });
-          },
-          error: function () {
-            console.log("Error al obtener los datos de las mascotas.");
-          },
-        });
+      var label = $('<label>').attr('for', 'checkbox_' + nombre_mascota).text(nombre_mascota);
+
+      // Create a div to hold each checkbox and label
+      var checkboxContainer = $('<div>').addClass('checkbox-container');
+
+      // Append the checkbox and label to the container
+      checkboxContainer.append(label);
+      checkboxContainer.append(checkbox);
+
+      // Append the checkbox container to the main container
+      mascotasContainer.append(checkboxContainer);
+    });
+  },
+  error: function () {
+    console.log("Error al obtener los datos de las mascotas.");
+  },
+});
 
       });
     </script>
