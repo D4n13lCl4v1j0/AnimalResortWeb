@@ -18,7 +18,7 @@ if ($conn->connect_error) {
 }
 
 $idUsuario = $conn->real_escape_string($_COOKIE['usuario_id']);
-$sql = "SELECT nombre_mascota FROM Mascotas WHERE usuario_mascota = '$idUsuario'";
+$sql = "SELECT id, nombre_mascota FROM Mascotas WHERE usuario_mascota = '$idUsuario'";
 $result = $conn->query($sql);
 
 $data = array(); // Array to store the data

@@ -59,13 +59,13 @@
       th {
         background-color: #f2f2f2;
       }
-      .info-direccion {
-        margin-bottom: 10px;
+      .info-direccion {   
         width: 100%;
         background-color: white;
         border-radius: 10px;
         padding: 20px;
         text-align: center;
+        margin-bottom: 10px;
       }
 
       .info-mascotas {
@@ -74,12 +74,20 @@
         border-radius: 10px;
         padding: 20px;
         text-align: center;
+        margin-bottom: 10px;
       }
 
   .info-mascotas {
     display: flex;
     flex-direction: column; /* Cambia la dirección a columna para disposición vertical */
   }
+ 
+  .info-resumen {
+        width: 100%;
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+      }
 
   .checkbox-container {
     margin-bottom: 10px; /* Agrega un espacio entre cada checkbox y label */
@@ -111,6 +119,15 @@
       <a>Selecciona tus mascotas</a>
     </div>
 
+    <div class="info-resumen" id="resumen">
+      <a>Resumen: </a><br>
+      <a>Número de mascotas: <span id="numMascotas">0</span></a><br>
+      <a>Días seleccionados: <span id="cantDias">0</span></a><br>
+      <a>Precio diario: $<span id="precioDia">20000</span></a><br>
+      <a>Precio diario con descuento: $<span id="precioDescuento">0</span></a><br>
+      <a>Precio total: $<span id="precioTotal">0</span></a>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -123,7 +140,7 @@ if (!document.cookie.includes('usuario_id')) {
         var fechaSeleccionada = document.getElementById("fechaSeleccionada");
         var diasSeleccionados = document.getElementById("diasSeleccionados");
         var direccionInfo = document.getElementById("direccionInfo");
-        var fechasElegidas = [];
+        var fechasElegidas = []; //
 
         var calendar = flatpickr(fechaSeleccionada, {
           mode: "multiple",
@@ -131,8 +148,12 @@ if (!document.cookie.includes('usuario_id')) {
           maxDate: new Date().fp_incr(31),
           dateFormat: "Y-m-d",
           onChange: function (selectedDates, dateStr, instance) {
-            fechasElegidas = selectedDates;
+            fechasElegidas = selectedDates.map(function (date) {
+        return date.toISOString().split("T")[0];
+      });
             diasSeleccionados.textContent = "Días: " + fechasElegidas.length;
+            console.log("fechas: ",fechasElegidas); //despues borro esta linea, o la comento, solo se usa para ver que el formato sea el correcto
+            actualizarResumen();
           },
         });
 
@@ -160,9 +181,10 @@ if (!document.cookie.includes('usuario_id')) {
 
     data.forEach(function (item) {
       var nombre_mascota = item.nombre_mascota;
+      var id_mascota = item.id;
       var checkbox = $('<input type="checkbox">').attr({
         value: nombre_mascota,
-        id: 'checkbox_' + nombre_mascota,
+        id: id_mascota,
       });
 
       var label = $('<label>').attr('for', 'checkbox_' + nombre_mascota).text(nombre_mascota);
@@ -178,7 +200,41 @@ if (!document.cookie.includes('usuario_id')) {
   },
 });
 
+function actualizarResumen() {
+          var numMascotas = $("input[type=checkbox]:checked").length;
+          var cantDias = fechasElegidas.length;
+          var precioDia = 20000; // Precio por día (ajústalo según tus necesidades)
+          var precioDescuento = 0; // Precio con descuento (ajústalo según tus necesidades)
+
+          var precioTotal = cantDias * numMascotas * (precioDia - precioDescuento);
+          // Si no hay fechas seleccionadas o mascotas, el precio total es cero
+          if (cantDias === 0 || numMascotas === 0) {
+            precioTotal = 0;
+          }
+
+          // Actualizar elementos en el resumen
+          $("#numMascotas").text(numMascotas);
+          $("#cantDias").text(cantDias);
+          $("#precioDia").text(precioDia);
+          $("#precioDescuento").text(precioDescuento);
+          $("#precioTotal").text(precioTotal);
+        }
+
+$(document).on("change", 'input[type="checkbox"]', function () {
+    actualizarMascotasSeleccionadas();
+    actualizarResumen();
+  });
+
+  function actualizarMascotasSeleccionadas() {
+    var mascotasSeleccionadas = []; //
+    $("input[type=checkbox]:checked").each(function () {
+      mascotasSeleccionadas.push(this.id);
+    });
+    console.log("Mascotas seleccionadas:", mascotasSeleccionadas);//solo se usa para ver los id almacenados y verificar que sea dinamico el check
+  }
+
       });
+
     </script>
   </body>
 </html>
