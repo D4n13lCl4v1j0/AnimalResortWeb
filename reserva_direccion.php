@@ -4,8 +4,8 @@ $username = "animalre";
 $password = "y367}A]y){K4Cg4";
 $dbname = "animalre_database";
 
-if (!isset($_COOKIE['usuario_id'])) {
-    echo json_encode(array('error' => 'Sesión expirada, inicie nuevamente'));
+if(!isset($_COOKIE['usuario_id'])) {
+    echo "<script>alert('Sesión expirada, inicie nuevamente'); window.location.href='index.php';</script>";
     exit();
 }
 

@@ -114,6 +114,11 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+
+if (!document.cookie.includes('usuario_id')) {
+      alert('Sesión expirada, inicie nuevamente');
+      window.location.href = 'index.php';
+    }
       document.addEventListener("DOMContentLoaded", function () {
         var fechaSeleccionada = document.getElementById("fechaSeleccionada");
         var diasSeleccionados = document.getElementById("diasSeleccionados");
@@ -143,7 +148,7 @@
             direccionInfo.innerHTML = direccionHtml;
           },
           error: function () {
-            console.log("Error al obtener los datos.");
+            console.log("Error al obtener los datos direccion.");
           },
         });
 
@@ -154,25 +159,17 @@
     var mascotasContainer = $(".info-mascotas");
 
     data.forEach(function (item) {
-      // Assuming each item has a property called 'nombre_mascota'
       var nombre_mascota = item.nombre_mascota;
-
-      // Create an element for each pet as a checkbox
       var checkbox = $('<input type="checkbox">').attr({
         value: nombre_mascota,
         id: 'checkbox_' + nombre_mascota,
       });
 
       var label = $('<label>').attr('for', 'checkbox_' + nombre_mascota).text(nombre_mascota);
-
-      // Create a div to hold each checkbox and label
       var checkboxContainer = $('<div>').addClass('checkbox-container');
 
-      // Append the checkbox and label to the container
       checkboxContainer.append(label);
       checkboxContainer.append(checkbox);
-
-      // Append the checkbox container to the main container
       mascotasContainer.append(checkboxContainer);
     });
   },
